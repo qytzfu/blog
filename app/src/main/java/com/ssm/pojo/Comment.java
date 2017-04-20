@@ -3,53 +3,109 @@ package com.ssm.pojo;
 import java.util.Date;
 
 public class Comment {
-    private Integer id;
 
-    private String userip;
-
+	private int id;
     private String content;
+	private Date date;
+    private int blogId;
+    private int authorId;
+    private int floor;
 
-    private Date commentdate;
 
-    private Integer blogId;
+	private int senderId;
+    private int receiverId;
+    
+    private Author author;
+    public int getSenderId() {
+		return senderId;
+	}
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setSenderId(int senderId) {
+		this.senderId = senderId;
+	}
 
-    public String getUserip() {
-        return userip;
-    }
 
-    public void setUserip(String userip) {
-        this.userip = userip == null ? null : userip.trim();
-    }
+	public int getReceiverId() {
+		return receiverId;
+	}
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public void setReceiverId(int receiverId) {
+		this.receiverId = receiverId;
+	}
+    
+    
+    public int getId() {
+		return id;
+	}
 
-    public Date getCommentdate() {
-        return commentdate;
-    }
 
-    public void setCommentdate(Date commentdate) {
-        this.commentdate = commentdate;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public Integer getBlogId() {
-        return blogId;
-    }
 
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
-    }
+	public String getContent() {
+		return content;
+	}
+
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+    public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+
+	public int getBlogId() {
+		return blogId;
+	}
+
+
+	public void setBlogId(int blogId) {
+		this.blogId = blogId;
+	}
+
+
+	public int getAuthorId() {
+		return authorId;
+	}
+
+
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+
+
+	public int getFloor() {
+		return floor;
+	}
+
+
+	public void setFloor(int floor) {
+		this.floor = floor;
+	}
+
+
+	public Author getAuthor() {
+		return author;
+	}
+
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+   
+    
+    
 }

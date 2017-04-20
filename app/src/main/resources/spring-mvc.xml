@@ -39,6 +39,19 @@
 
     <!-- 添加注解驱动 -->
     <mvc:annotation-driven enable-matrix-variables="true" />
+
+    <!-- 配置拦截器 -->
+	<mvc:interceptors>
+	         <!-- 配置登陆拦截器 -->
+	         <mvc:interceptor>
+	         	<!--暂时失效了  --> 
+	             <mvc:mapping path="/test*"/>
+	             <bean class="com.ssm.interceptor.LoginInterceptor"></bean>
+	         </mvc:interceptor>
+	</mvc:interceptors>
+
+
+
     <!-- 允许对静态资源文件的访问 -->
 
     <mvc:default-servlet-handler />

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ssm.dao.MessageMapper" >
+
+<!-- 
+<mapper namespace="com.ssm.dao.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="readTimes" property="readTimes" jdbcType="INTEGER" />
+    <result column="authorId" property="authorId" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>  
+
+-->
+	
+	<select id="findById" parameterType="int" resultType="com.ssm.pojo.Message">
+        select * from `t_message` where id = #{id}
+    </select>	
+	
+	<insert id="insert" parameterType="com.ssm.pojo.Message" >
+		insert into t_message (content,date,senderId,receiverId,blogId)
+		values (#{content,jdbcType=LONGVARCHAR}, #{date,jdbcType=TIMESTAMP},#{senderId,jdbcType=INTEGER},#{receiverId,jdbcType=INTEGER},#{blogId,jdbcType=INTEGER})
+	</insert>
+    
+    <update id="update" parameterType="com.ssm.pojo.Message" >
+        update t_message set content=#{content},blogId=#{blogId},date=#{date,jdbcType=TIMESTAMP},senderId=#{senderId},receiverId=#{receiverId} where id=#{id} 
+    </update>
+    
+    <delete id="remove" parameterType="int">
+        delete from t_message where id=#{id}
+    </delete>
+
+	<select id="getByReceiverId" parameterType="int" resultType="com.ssm.pojo.Message">
+        select * from `t_message` where receiverId = #{receiverId}
+    </select>	
+
+<!--   
+	<select id="listAllBlog" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` ORDER BY date DESC
+    </select>
+    
+-->    
+
+<!-- 
+	<select id="listPage" resultType="com.ssm.pojo.Comment">
+        select * from `t_comment` ORDER BY date DESC
+		 <if test="#{0}!=null and #{1}!=null">
+		 	limit #{0},#{1}
+		 </if>
+    </select>	
+    
+    
+	<select id="getBlogsByAuthorId" resultType="com.ssm.pojo.Comment">
+        select * from `t_blog` where authorId=#{authorId} ORDER BY date DESC
+    </select>
+	<select id="getBlogsByAuthorPage" resultType="com.ssm.pojo.Comment">
+        select * from `t_blog` where authorId=#{0} ORDER BY date DESC
+		 <if test="#{1}!=null and #{2}!=null">
+		 	limit #{1},#{2}
+		 </if>     
+    </select>	
+ -->
+ 
+</mapper>

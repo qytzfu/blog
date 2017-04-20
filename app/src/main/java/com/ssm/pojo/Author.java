@@ -1,11 +1,33 @@
 package com.ssm.pojo;
 
+import java.util.List;
+
 public class Author {
+
+	private int id;
     private String username;
-
     private String password;
+	private String imgPath;
+	
+//	private List<Blog> blogs;
 
-    private String profile;
+	
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public String getUsername() {
         return username;
@@ -23,11 +45,6 @@ public class Author {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getProfile() {
-        return profile;
-    }
 
-    public void setProfile(String profile) {
-        this.profile = profile == null ? null : profile.trim();
-    }
+
 }

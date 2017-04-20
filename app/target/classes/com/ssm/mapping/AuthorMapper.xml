@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssm.dao.AuthorMapper" >
+
+<!-- 
+
+
   <resultMap id="BaseResultMap" type="com.ssm.pojo.Author" >
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="imgPath" property="imgPath" jdbcType="VARCHAR"/>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ssm.pojo.Author" extends="BaseResultMap" >
-    <result column="profile" property="profile" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Blob_Column_List" >
-    profile
-  </sql>
+
+
   <insert id="insert" parameterType="com.ssm.pojo.Author" >
     insert into t_author (username, password, profile
       )
@@ -56,4 +57,44 @@
 		 	</if>
 		</set>
 	</update>
+	
+-->	
+	
+	<select id="findById" parameterType="int" resultType="com.ssm.pojo.Author">
+        select * from `t_author` where id = #{id}
+    </select>
+	<select id="findByName" parameterType="String" resultType="com.ssm.pojo.Author">
+        select * from `t_author` where username = #{username}
+    </select>   
+    <!-- 定义的resultMap，可以解决类的属性名和数据库列名不一致的问题-->
+    <!-- <resultMap type="User" id="userResultMap">
+        <id property="id" column="user_id"  />
+        <result property="userName" column="user_userName"  />
+        <result property="userAge" column="user_userAge"  />
+        <result property="userAddress" column="user_userAddress"  />
+    </resultMap> -->
+    
+    <!-- 返回list的select语句，注意 resultMap的值是指向前面定义好的 -->
+    <!-- <select id="selectUsersByName" parameterType="string" resultMap="userResultMap">
+        select * from user where user.userName = #{userName}
+    </select> -->
+    
+
+    
+    <!--执行增加操作的SQL语句。id和parameterType分别与IUserOperation接口中的addUser方法的名字和参数类型一致。
+    useGeneratedKeys设置为"true"表明要MyBatis获取由数据库自动生成的主键；keyProperty="id"指定把获取到的主键值注入到User的id属性--> 
+    <insert id="insert" parameterType="com.ssm.pojo.Author" useGeneratedKeys="true" keyProperty="id"> 
+        insert into t_author (username,password,imgPath)  values(#{username},#{password},#{imgPath})  
+    </insert>
+    
+    <update id="update" parameterType="com.ssm.pojo.Author" >
+        update t_author set username=#{username},password=#{password},imgPath=#{imgPath} where id=#{id}
+    </update>
+    
+    <delete id="remove" parameterType="int">
+        delete from t_author where id=#{id}
+    </delete>
+    
+    
+    
 </mapper>

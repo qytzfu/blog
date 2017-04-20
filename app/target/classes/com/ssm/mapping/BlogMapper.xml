@@ -4,9 +4,13 @@
   <resultMap id="BaseResultMap" type="com.ssm.pojo.Blog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="releasedate" property="releasedate" jdbcType="TIMESTAMP" />
-    <result column="comment_times" property="commentTimes" jdbcType="INTEGER" />
-  </resultMap>
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="readTimes" property="readTimes" jdbcType="INTEGER" />
+    <result column="authorId" property="authorId" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>  
+<!-- 
   <resultMap id="ResultMapWithBLOBs" type="com.ssm.pojo.Blog" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -117,7 +121,10 @@
 		 		content=#{content},
 		 	</if>
 		 	<if test="commentTimes!=null">
-				commentTimes=#{commentTimes},
+				comment_times=#{commentTimes},
+			</if>
+			<if test="commentTimes!=null">
+				releasedate=#{releasedate}
 			</if>
 		</set>
 		where id=#{id}
@@ -127,7 +134,9 @@
 	</delete>
 	<select id="listBlog" resultMap="BaseResultMap">
 		 SELECT * FROM t_blog 
-		 <!-- 
+		 
+		 
+		 
 		 <where>
 			<if test="title!=null and title!=''">
 		 		and title like #{title}
@@ -140,13 +149,90 @@
 		 		and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
 		 	</if>
 		 </where>
-		  -->
+		 
+		 
+		 
 		 ORDER BY releaseDate DESC
-		 <!-- 
+		 
 		 <if test="start!=null and pageSize!=null">
 		 	limit #{start},#{pageSize}
 		 </if>
-		  -->
+		
 	</select>
+	<select id="listPage" resultMap="BaseResultMap">
+		 SELECT * FROM t_blog 
+		 
+		 
+		 
+		 <where>
+			<if test="title!=null and title!=''">
+		 		and title like #{title}
+		 	</if>
+		 	<if test="typeId!=null and typeId!=''">
+		 		and type_id=#{typeId}
+		 	</if>
+
+		 	<if test="releaseDateStr!=null and releaseDateStr!=''">
+		 		and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
+		 	</if>
+		 </where>
+		 
+		 
+		 ORDER BY releaseDate DESC
+		 
+
+		 <if test="#{0}!=null and #{1}!=null">
+		 	limit #{0},#{1}
+		 </if>
+
+	</select>
+
+
+-->
+
+
+
+
 	
+	<select id="findById" parameterType="int" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` where id = #{id}
+    </select>	
+	
+	<insert id="insert" parameterType="com.ssm.pojo.Blog" >
+		insert into t_blog (title,content,summary,date,readTimes,authorId)
+		values (#{title,jdbcType=VARCHAR},#{content,jdbcType=LONGVARCHAR},#{summary,jdbcType=LONGVARCHAR}, #{date,jdbcType=TIMESTAMP},#{readTimes,jdbcType=INTEGER},#{authorId,jdbcType=INTEGER} )
+	</insert>
+    
+    <update id="update" parameterType="com.ssm.pojo.Blog" >
+        update t_blog set title=#{title},content=#{content},summary=#{summary},date=#{date,jdbcType=TIMESTAMP},readTimes=#{readTimes},authorId=#{authorId} where id=#{id} 
+    </update>
+    
+    <delete id="remove" parameterType="int">
+        delete from t_blog where id=#{id}
+    </delete>
+
+<!--   
+	<select id="listAllBlog" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` ORDER BY date DESC
+    </select>
+    
+-->    
+	<select id="listPage" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` ORDER BY date DESC
+		 <if test="#{0}!=null and #{1}!=null">
+		 	limit #{0},#{1}
+		 </if>
+    </select>	
+    
+    
+	<select id="getBlogsByAuthorId" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` where authorId=#{authorId} ORDER BY date DESC
+    </select>
+	<select id="getBlogsByAuthorPage" resultType="com.ssm.pojo.Blog">
+        select * from `t_blog` where authorId=#{0} ORDER BY date DESC
+		 <if test="#{1}!=null and #{2}!=null">
+		 	limit #{1},#{2}
+		 </if>     
+    </select>	
+
 </mapper>
